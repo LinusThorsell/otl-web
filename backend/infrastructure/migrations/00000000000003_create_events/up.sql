@@ -1,0 +1,8 @@
+CREATE TABLE events (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR NOT NULL,
+  date TIMESTAMP NOT NULL,
+  url VARCHAR NOT NULL,
+
+  tour_id INTEGER REFERENCES tours(id)
+)

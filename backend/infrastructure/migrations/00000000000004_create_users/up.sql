@@ -1,0 +1,6 @@
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  pdga INTEGER DEFAULT NULL,
+  firstname TEXT NOT NULL,
+  lastname TEXT NOT NULL
+);

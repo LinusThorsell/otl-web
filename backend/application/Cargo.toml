@@ -1,0 +1,17 @@
+[package]
+name = "application"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+domain = { path = "../domain" }
+infrastructure = { path = "../infrastructure" }
+shared = { path = "../shared" }
+
+diesel = { version = "2.2.2", features = ["postgres"] }
+rocket = { version = "0.5.1", features = ["json"] }
+serde_json = "1.0.120"
+csv = "1.3.0"
+uuid = { version = "1.10.0", features = [ "v4", "fast-rng", "macro-diagnostics" ] }
+regex = "1.10.5"
+chrono = "0.4.38"

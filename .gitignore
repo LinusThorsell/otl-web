@@ -1,0 +1,13 @@
+/target/**
+target
+/target
+target/
+target/**
+
+/node_modules/**
+node_modules
+/node_modules
+node_modules/
+node_modules/**
+
+.env

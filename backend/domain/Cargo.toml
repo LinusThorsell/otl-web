@@ -1,0 +1,10 @@
+[package]
+name = "domain"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+diesel = { version = "2.2.2", features = ["postgres", "chrono"] }
+rocket = { version = "0.5.1", features = ["json"] }
+serde = { version = "1.0.204", features = ["derive"] }
+chrono = { version = "0.4.38", features = ["serde"] }
