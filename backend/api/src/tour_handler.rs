@@ -8,9 +8,10 @@ use rocket::serde::json::Json;
 
 use application::tour::create;
 use application::tour::read;
+use application::auth::apikey_guard::ApiKeyGuard;
 
 #[post("/tour/create", format = "application/json", data = "<tour_data>")]
-pub fn tour_create(tour_data: Json<NewTour>) -> std::io::Result<()> {
+pub fn tour_create(tour_data: Json<NewTour>, _apikey: ApiKeyGuard) -> std::io::Result<()> {
     let tour = tour_data.into_inner();
     match create::create_tour(tour) {
         Ok(_) => {},

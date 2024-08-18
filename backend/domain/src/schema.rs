@@ -1,6 +1,14 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
+    apikeys (id) {
+        id -> Int4,
+        apikey -> Text,
+        expires -> Timestamp,
+    }
+}
+
+diesel::table! {
     blog_posts (id) {
         id -> Int4,
         title -> Varchar,
@@ -54,6 +62,7 @@ diesel::joinable!(scores -> events (event_id));
 diesel::joinable!(scores -> users (user_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
+    apikeys,
     blog_posts,
     events,
     scores,

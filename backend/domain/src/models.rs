@@ -104,3 +104,11 @@ pub struct NewScore {
     pub event_id: i32,
     pub user_id: i32,
 }
+
+#[derive(Queryable, Serialize, Ord, Eq, PartialEq, PartialOrd, Clone, Debug)]
+#[diesel(table_name = apikeys)]
+pub struct ApiKey {
+    pub id: i32,
+    pub apikey: String,
+    pub expires: chrono::NaiveDateTime,
+}

@@ -1,0 +1,5 @@
+CREATE TABLE apikeys (
+  id SERIAL PRIMARY KEY,
+  apikey TEXT NOT NULL,
+  expires TIMESTAMP NOT NULL
+);
