@@ -1,5 +1,5 @@
 services:
-  otl-database:
+  database:
     image: postgres:16.3-alpine
     ports:
       - 5432:5432
@@ -9,6 +9,13 @@ services:
       - POSTGRES_PASSWORD=LOCAL
       - POSTGRES_USER=admin
       - POSTGRES_DB=otl
+  backend:
+    build: ./backend
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend/:/app
+    command: sh -c "cargo-watch -x run"
   # web:
   #   container_name: web
   #   build:
