@@ -16,6 +16,8 @@ services:
     volumes:
       - ./backend/:/app
     command: sh -c "cargo-watch -x run"
+    depends-on:
+      - database
   nginx:
     build: ./nginx
     ports:
@@ -25,3 +27,5 @@ services:
       - ./nginx/nginx.conf:/nginx.conf
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /tmp/acme_challenge:/tmp/acme_challenge
+    depends-on:
+      - backend
