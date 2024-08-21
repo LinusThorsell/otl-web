@@ -16,9 +16,12 @@ services:
     volumes:
       - ./backend/:/app
     command: sh -c "cargo-watch -x run"
-  # web:
-  #   container_name: web
-  #   build:
-  #     context: ./frontend
-  #   volumes:
-  #     - ./frontend:./frontend
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/nginx.conf:/nginx.conf
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /tmp/acme_challenge:/tmp/acme_challenge
