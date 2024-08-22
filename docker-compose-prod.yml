@@ -11,7 +11,7 @@ services:
     build:
       context: ./backend
       dockerfile: ./prod.Dockerfile
-    entrypoint: /app/backend
+    entrypoint: /app/main
     ports:
       - 8000:8000
   nginx:

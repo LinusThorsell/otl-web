@@ -2,10 +2,4 @@ FROM rust:1.80.1-slim-bullseye
 
 WORKDIR /app
 
-RUN apt update && \
-    apt install -y libpq-dev && \
-    update-ca-certificates
-
-COPY ./ ./
-
-RUN cargo build --release
+RUN curl wget https://github.com/LinusThorsell/otl-web/releases/download/v1.0/main
