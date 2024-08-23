@@ -1,8 +1,0 @@
-services:
-  release-builder:
-    build:
-      context: ./backend
-      dockerfile: ./build.Dockerfile
-    volumes:
-      - ./backend/:/app
-    command: sh -c "tail -F /dev/null"

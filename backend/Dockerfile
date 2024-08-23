@@ -1,4 +1,4 @@
-FROM rust:1.80.1-slim-bullseye
+FROM --platform=linux/arm64 arm64v8/rust:1.80.1
 
 WORKDIR /app
 
@@ -8,4 +8,5 @@ RUN apt update && \
 
 COPY ./ ./
 
-RUN cargo build --release
+RUN cargo build --jobs 8 --release
+
