@@ -6,6 +6,3 @@ members = [
 	"application",
 	"shared",
 ]
-
-[workspace.dependencies]
-pq-sys = { version = "0.6.1", features = ["vendored"] }
