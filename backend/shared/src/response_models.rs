@@ -1,10 +1,11 @@
-use domain::{models::{BlogPost, Tour}, structs::TourLeaderboardEntry};
+use domain::{models::{BlogPost, Tour}, structs::TourLeaderboardDivision};
 use rocket::serde::Serialize;
+use std::collections::BTreeMap;
 
 #[derive(Serialize)]
 pub struct TourLeaderboard {
-    pub entries: Vec<TourLeaderboardEntry>,
     pub tour: Tour,
+    pub divisions: BTreeMap<String, TourLeaderboardDivision>
 }
 
 #[derive(Serialize)]

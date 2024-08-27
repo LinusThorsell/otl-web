@@ -7,5 +7,9 @@ pub struct TourLeaderboardEntry {
     pub user: User,
     pub scores: Vec<Score>,
     pub total_score: i32,
-    pub division: String
+}
+
+#[derive(Serialize)]
+pub struct TourLeaderboardDivision {
+    pub entries: Vec<TourLeaderboardEntry>
 }
