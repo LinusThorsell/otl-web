@@ -8,5 +8,5 @@ RUN apt update && \
 
 COPY ./ ./
 
-RUN wget https://github.com/LinusThorsell/otl-web/releases/download/v1.1/main
+RUN wget https://github.com/LinusThorsell/otl-web/releases/latest/download/main
 RUN chmod +x ./main
