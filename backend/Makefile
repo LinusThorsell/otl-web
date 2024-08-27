@@ -19,3 +19,6 @@ reset-database:
 
 database:
 	psql -U admin -d otl -h localhost
+
+build:
+	cross build --target aarch64-unknown-linux-gnu --release
