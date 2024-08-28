@@ -2,10 +2,11 @@ use core::panic;
 use std::collections::{BTreeMap, HashMap};
 
 use domain::{models::{Event, Score, Tour, User}, schema::{events, scores, users}, structs::{TourLeaderboardEntry, TourLeaderboardDivision}};
-use shared::response_models::{Response, ResponseBody, TourLeaderboard};
+use shared::response_models::TourLeaderboard;
 use infrastructure::establish_connection;
 use diesel::prelude::*;
-use rocket::response::status::NotFound;
+
+use crate::errors::ApplicationError;
 
 pub fn tour_list() -> Vec<Tour> {
     use domain::schema::tours;
@@ -23,15 +24,15 @@ pub fn tour_list() -> Vec<Tour> {
     }
 }
 
-pub fn tour_get(tour_id: i32) -> Result<Tour, NotFound<String>> {
+pub fn tour_get(tour_id: i32) -> Result<Tour, ApplicationError> {
     use domain::schema::tours;
 
     match tours::table.find(tour_id).first::<Tour>(&mut establish_connection()) {
         Ok(tour) => Ok(tour),
         Err(err) => match err {
             diesel::result::Error::NotFound => {
-                let response = Response { body: ResponseBody::Message(format!("Error finding tour with id {} - {}", tour_id, err)) };
-                return Err(NotFound(serde_json::to_string(&response).unwrap()));
+                let response = format!("Error finding tour with id {} - {}", tour_id, err);
+                return Err(ApplicationError::NotFound(response));
             },
             _ => {
                 panic!("Database error - {}", err);
@@ -40,7 +41,7 @@ pub fn tour_get(tour_id: i32) -> Result<Tour, NotFound<String>> {
     }
 }
 
-pub fn tour_get_leaderboard(tour_id: i32) -> Result<TourLeaderboard, NotFound<String>> {
+pub fn tour_get_leaderboard(tour_id: i32) -> Result<TourLeaderboard, ApplicationError> {
     // Fetch the tour object by ID
     let tour_obj = tour_get(tour_id)?;
 
