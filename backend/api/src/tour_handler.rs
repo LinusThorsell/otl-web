@@ -24,8 +24,8 @@ pub fn tour_create(tour_data: Json<NewTour>, _apikey: ApiKeyGuard) -> Result<Jso
     Ok(Json(Response::success(())))
 }
 
-#[get("/tour/list")]
-pub fn tour_list() -> Result<Json<Response<Vec<Tour>>>, ApiError> {
+#[get("/tours")]
+pub fn list() -> Result<Json<Response<Vec<Tour>>>, ApiError> {
     let tours = read::tour_list();
     Ok(Json(Response::success(tours)))
 }
@@ -36,8 +36,8 @@ pub fn tour_get(tour_id: i32) -> Result<Json<Response<Tour>>, ApiError> {
     Ok(Json(Response::success(tour)))
 }
 
-#[get("/tour/get/leaderboard/<tour_id>")]
-pub fn tour_get_leaderboard(tour_id: i32) -> Result<Json<Response<TourLeaderboard>>, ApiError> {
+#[get("/tour/leaderboard/<tour_id>")]
+pub fn leaderboard(tour_id: i32) -> Result<Json<Response<TourLeaderboard>>, ApiError> {
     let leaderboard = read::tour_get_leaderboard(tour_id).map_err(ApiError)?;
     Ok(Json(Response::success(leaderboard)))
 }

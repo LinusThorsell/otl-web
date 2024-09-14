@@ -1,13 +1,16 @@
 use application::auth::apikey_guard::ApiKeyGuard;
+use domain::models::Event;
 use domain::models::NewEvent;
 use rocket::fs::TempFile;
 // use shared::response_models::{Response, ResponseBody};
 use rocket::post;
+use rocket::get;
 
 use rocket::serde::json::Json;
 
 use application::event::save;
 use application::event::create;
+use application::event::read;
 use shared::response_models::Response;
 
 use crate::errors::ApiError;
@@ -31,4 +34,10 @@ pub async fn event_create(event_data: Json<NewEvent>, _apikey: ApiKeyGuard) -> R
     };
 
     Ok(Json(Response::success(())))
+}
+
+#[get("/events")]
+pub fn list() -> Result<Json<Response<Vec<Event>>>, ApiError> {
+    let events: Vec<Event> = read::list_events().map_err(ApiError)?;
+    Ok(Json(Response::success(events)))
 }

@@ -34,9 +34,10 @@ fn rocket() -> _ {
             blogpost_handler::list_blogpost_handler,
             event_handler::event_parse_and_save_csv_handler,
             event_handler::event_create,
+            event_handler::list,
             tour_handler::tour_create,
-            tour_handler::tour_list,
+            tour_handler::list,
             tour_handler::tour_get,
-            tour_handler::tour_get_leaderboard,
+            tour_handler::leaderboard,
         ])
 }

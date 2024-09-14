@@ -16,3 +16,12 @@ services:
     volumes:
       - ./backend/:/app
     command: sh -c "cargo-watch -x run"
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./dev.Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/:/app
+    command: sh -c "npm run dev"
