@@ -11,6 +11,6 @@
     src={image}
     alt={firstname + " " + lastname}
   />
-  <h1 class="mt-3 text-3xl font-bold">{firstname} {lastname}</h1>
-  <h1 class="text-xl">{description}</h1>
+  <h1 class="mt-3 text-3xl font-bold text-center">{firstname} {lastname}</h1>
+  <h1 class="text-xl text-center">{description}</h1>
 </div>

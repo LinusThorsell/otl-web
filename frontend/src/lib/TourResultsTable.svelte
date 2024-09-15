@@ -18,7 +18,7 @@
   <TableBody tableBodyClass="divide-y">
     {#each entries as entry}
       <TableBodyRow>
-        <TableBodyCell>TODO</TableBodyCell>
+        <TableBodyCell>{entry.placement}</TableBodyCell>
         <TableBodyCell>{entry.user.firstname} {entry.user.lastname}</TableBodyCell>
         <TableBodyCell>{entry.user.pdga ? entry.user.pdga : '-'}</TableBodyCell>
         <TableBodyCell>{entry.total_score}</TableBodyCell>

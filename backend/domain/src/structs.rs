@@ -7,6 +7,7 @@ pub struct TourLeaderboardEntry {
     pub user: User,
     pub scores: Vec<Score>,
     pub total_score: i32,
+    pub placement: usize,
 }
 
 #[derive(Serialize)]

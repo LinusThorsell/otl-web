@@ -16,7 +16,7 @@
 </script>
 <svelte:window bind:innerWidth={size} />
 
-<div class="flex flex-wrap justify-center sm:w-5/6 w-11/12 pb-4">
+<div class="flex flex-wrap justify-center lg:w-5/6 w-11/12 pb-4">
   {#each displayedEvents as event}
     <EventCard event={event} button="Registrera dig via Tjing" url={event.url} />
   {/each}
@@ -30,7 +30,7 @@
           }}
           class="w-full"
         >
-          Visa fler framtida evenemang
+          Visa alla framtida evenemang
         </Button>
       </Card>
     {/if}

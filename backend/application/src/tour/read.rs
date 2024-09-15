@@ -113,6 +113,7 @@ pub fn tour_get_leaderboard(tour_id: i32) -> Result<TourLeaderboard, Application
                 user: user.clone(),
                 scores: top_scores,
                 total_score,
+                placement: 0,
             };
 
             // Add this entry to the appropriate division in the map
@@ -126,9 +127,61 @@ pub fn tour_get_leaderboard(tour_id: i32) -> Result<TourLeaderboard, Application
         }
     }
 
-    // Sort each division's entries by total score in descending order
+    // Sort each division's entries by total score and tie-breakers, and assign placements
     for division in division_map.values_mut() {
-        division.entries.sort_by(|a, b| b.total_score.cmp(&a.total_score));
+        // Sort entries using the custom comparator
+        division.entries.sort_by(|a, b| {
+            // First compare total_score in descending order
+            let cmp_total = b.total_score.cmp(&a.total_score);
+            if cmp_total != std::cmp::Ordering::Equal {
+                return cmp_total;
+            }
+            // Compare individual scores for tie-breaking
+            let min_len = std::cmp::min(a.scores.len(), b.scores.len());
+            for i in 0..min_len {
+                let cmp_score = b.scores[i].score.cmp(&a.scores[i].score);
+                if cmp_score != std::cmp::Ordering::Equal {
+                    return cmp_score;
+                }
+            }
+            // If all compared scores are equal, the player with more scores is better
+            let cmp_len = b.scores.len().cmp(&a.scores.len());
+            if cmp_len != std::cmp::Ordering::Equal {
+                return cmp_len;
+            }
+            // As a last resort, compare user IDs to ensure consistent ordering
+            a.user.id.cmp(&b.user.id)
+        });
+
+        // Assign placements
+        let mut current_placement = 1;
+        let mut previous_entry: Option<&TourLeaderboardEntry> = None;
+
+        for (i, entry) in division.entries.iter_mut().enumerate() {
+            if let Some(prev) = previous_entry {
+                // Check if the current entry ties with the previous entry
+                let mut is_tie = entry.total_score == prev.total_score;
+                if is_tie {
+                    let min_len = std::cmp::min(entry.scores.len(), prev.scores.len());
+                    for j in 0..min_len {
+                        if entry.scores[j].score != prev.scores[j].score {
+                            is_tie = false;
+                            break;
+                        }
+                    }
+                    if is_tie && entry.scores.len() != prev.scores.len() {
+                        is_tie = false;
+                    }
+                }
+                if !is_tie {
+                    current_placement = i + 1;
+                }
+            } else {
+                current_placement = 1;
+            }
+            entry.placement = current_placement;
+            previous_entry = Some(entry);
+        }
     }
 
     // Create the final leaderboard object with a map of divisions
