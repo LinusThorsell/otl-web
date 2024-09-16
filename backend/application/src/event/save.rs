@@ -121,7 +121,7 @@ pub async fn event_parse_and_save_csv(file: TempFile<'_>, event_id_in: i32) -> R
     for record in scored_records {
         match users::table.select(users::all_columns).filter(pdga.eq(record.pdga)).first::<User>(connection) {
             Ok(user) => {
-                create_score(&record.score.unwrap(), &record.divcode, 1, user.id, connection);
+                create_score(&record.score.unwrap(), &record.divcode, event_id_in, user.id, connection);
             },
             Err(err) => match err {
                 diesel::result::Error::NotFound => {
@@ -129,7 +129,7 @@ pub async fn event_parse_and_save_csv(file: TempFile<'_>, event_id_in: i32) -> R
                     // number saved.
                     match users::table.select(users::all_columns).filter(pdga.is_null()).filter(firstname.eq(&record.firstname)).filter(lastname.eq(&record.lastname)).first::<User>(connection) {
                         Ok(user) => {
-                            create_score(&record.score.unwrap(), &record.divcode, 1, user.id, connection);
+                            create_score(&record.score.unwrap(), &record.divcode, event_id_in, user.id, connection);
                         },
                         Err(err) => match err {
                             diesel::result::Error::NotFound => {
