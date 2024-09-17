@@ -1,9 +1,9 @@
-FROM rust:1.80.1-slim-bullseye
+FROM rust:1.80.1-bullseye
 
 WORKDIR /app
 
-RUN apt-get update
-RUN apt-get install libpq-dev -y
+RUN apt update && apt upgrade -y
+RUN apt install libpq-dev -y
 
 RUN cargo install cargo-watch
 
