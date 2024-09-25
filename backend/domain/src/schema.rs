@@ -23,6 +23,7 @@ diesel::table! {
         title -> Varchar,
         date -> Timestamp,
         url -> Varchar,
+        image -> Varchar,
         tour_id -> Nullable<Int4>,
     }
 }

@@ -1,3 +1,6 @@
+use rocket::FromForm;
+use std::path::Path;
+use rocket::form::Form;
 use application::auth::apikey_guard::ApiKeyGuard;
 use domain::models::Event;
 use domain::models::NewEvent;
@@ -25,9 +28,33 @@ pub async fn event_parse_and_save_csv_handler(file: TempFile<'_>, event_id: i32,
     Ok(Json(Response::success(())))
 }
 
-#[post("/event/create", format = "application/json", data = "<event_data>")]
-pub async fn event_create(event_data: Json<NewEvent>, _apikey: ApiKeyGuard) -> Result<Json<Response<()>>, ApiError> {
-    let event = event_data.into_inner();
+
+#[derive(FromForm)]
+pub struct EventForm<'r> {
+    pub title: String,
+    pub date: String,
+    pub url: String,
+    pub tour_id: Option<i32>,
+    pub image: TempFile<'r>,
+}
+
+#[post("/event/create", format = "multipart/form-data", data = "<event_data>")]
+pub async fn event_create(mut event_data: Form<EventForm<'_>>, _apikey: ApiKeyGuard) -> Result<Json<Response<()>>, ApiError> {
+    let image_name = format!("{}.png", uuid::Uuid::new_v4());
+    let save_path = Path::new("static/uploads/").join(&image_name);
+
+    if let Err(e) = event_data.image.copy_to(&save_path).await {
+        eprintln!("Failed to save image: {}", e);
+    }
+
+    let event = NewEvent {
+        title: event_data.title.clone(),
+        date: chrono::NaiveDateTime::parse_from_str(&event_data.date, "%Y-%m-%d %H:%M:%S").unwrap(),
+        url: event_data.url.clone(),
+        tour_id: event_data.tour_id,
+        image: image_name,
+    };
+
     match create::create_event(event) {
         Ok(_) => {},
         Err(_) => {},

@@ -53,6 +53,7 @@ pub struct Event {
     pub title: String,
     pub date: chrono::NaiveDateTime,
     pub url: String,
+    pub image: String,
     pub tour_id: Option<i32>,
 }
 
@@ -63,6 +64,7 @@ pub struct NewEvent {
     pub title: String,
     pub date: chrono::NaiveDateTime,
     pub url: String,
+    pub image: String,
     pub tour_id: Option<i32>,
 }
 

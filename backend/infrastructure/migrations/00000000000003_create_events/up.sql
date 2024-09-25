@@ -3,6 +3,7 @@ CREATE TABLE events (
   title VARCHAR NOT NULL,
   date TIMESTAMP NOT NULL,
   url VARCHAR NOT NULL,
+  image VARCHAR NOT NULL,
 
   tour_id INTEGER REFERENCES tours(id)
 )
