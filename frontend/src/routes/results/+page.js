@@ -1,6 +1,6 @@
+import { PUBLIC_BACKEND_URL } from '$env/static/public';
 export async function load({ fetch }) {
-  // let res = await fetch(`https://api.teamontheline.com/api/tours`)
-  let res = await fetch(`http://backend:8000/api/tours`)
+  let res = await fetch(PUBLIC_BACKEND_URL + '/api/tours')
   let tours = await res.json()
 
   return {

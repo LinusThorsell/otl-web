@@ -17,7 +17,7 @@ services:
       - 8000:8000
     volumes:
       - ./backend/:/app
-    command: sh -c "cargo-watch -x run"
+    command: sh -c "cargo-watch -x run --ignore static/"
   frontend:
     build:
       context: ./frontend

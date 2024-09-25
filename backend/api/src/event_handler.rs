@@ -49,7 +49,7 @@ pub async fn event_create(mut event_data: Form<EventForm<'_>>, _apikey: ApiKeyGu
 
     let event = NewEvent {
         title: event_data.title.clone(),
-        date: chrono::NaiveDateTime::parse_from_str(&event_data.date, "%Y-%m-%d %H:%M:%S").unwrap(),
+        date: chrono::NaiveDateTime::parse_from_str(&event_data.date, "%Y-%m-%dT%H:%M").unwrap(),
         url: event_data.url.clone(),
         tour_id: event_data.tour_id,
         image: image_name,

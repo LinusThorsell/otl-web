@@ -1,11 +1,13 @@
 <script>
   import { Card, Button } from 'flowbite-svelte';
   import { ArrowRightOutline } from 'flowbite-svelte-icons';
+  import { PUBLIC_BACKEND_URL } from '$env/static/public';
 
   export let event;
   export let button;
   export let url;
-  export let image;
+
+  let image = PUBLIC_BACKEND_URL + "/static/uploads/" + event.image;
 </script>
 
 <Card class="mt-4 sm:mx-2">
