@@ -1,8 +1,9 @@
 <script>
   import { Input, Select, Label, Fileupload, Button, Accordion, AccordionItem } from 'flowbite-svelte';
   import Container from '$lib/Container.svelte';
-  import CreateEventForm from '$lib/admin/CreateEventForm.svelte';
   import CreateTourForm from '$lib/admin/CreateTourForm.svelte';
+  import CreateEventForm from '$lib/admin/CreateEventForm.svelte';
+  import UploadScoresForm from '$lib/admin/UploadScoresForm.svelte';
   import { PUBLIC_BACKEND_URL } from '$env/static/public';
 
   export let data;
@@ -24,6 +25,10 @@
     <AccordionItem class="w-full">
       <span slot="header">Create event</span>
       <CreateEventForm apikey={apikey} tours={data.tours} />
+    </AccordionItem>
+    <AccordionItem class="w-full">
+      <span slot="header">Upload scores</span>
+      <UploadScoresForm apikey={apikey} events={data.events} />
     </AccordionItem>
   </Accordion>
 </Container>

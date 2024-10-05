@@ -19,8 +19,8 @@ use shared::response_models::Response;
 use crate::errors::ApiError;
 
 #[post("/event/ingest/<event_id>", format = "multipart/form-data", data = "<file>")]
-pub async fn event_parse_and_save_csv_handler(file: TempFile<'_>, event_id: i32, _apikey: ApiKeyGuard) -> Result<Json<Response<()>>, ApiError> {
-    match save::event_parse_and_save_csv(file, event_id).await {
+pub async fn event_parse_and_save_csv_handler(file: Form<TempFile<'_>>, event_id: i32, _apikey: ApiKeyGuard) -> Result<Json<Response<()>>, ApiError> {
+    match save::event_parse_and_save_csv(&file.into_inner(), event_id).await {
         Ok(_) => {},
         Err(_) => {},
     };

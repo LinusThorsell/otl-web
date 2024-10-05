@@ -35,7 +35,7 @@ struct InputCsvRecord {
     score: Option<i32>,
 }
 
-async fn parse_file_to_csv_string(file: TempFile<'_>) -> Result<std::string::String, Box<dyn std::error::Error>> {
+async fn parse_file_to_csv_string(file: &TempFile<'_>) -> Result<std::string::String, Box<dyn std::error::Error>> {
     let mut contents = String::new();
     file.open().await?.read_to_string(&mut contents).await?;
 
@@ -110,7 +110,7 @@ fn create_user(pdga_in: &Option<i32>, firstname_in: &String, lastname_in: &Strin
     }
 }
 
-pub async fn event_parse_and_save_csv(file: TempFile<'_>, event_id_in: i32) -> Result<(), Box<dyn std::error::Error>> {
+pub async fn event_parse_and_save_csv(file: &TempFile<'_>, event_id_in: i32) -> Result<(), Box<dyn std::error::Error>> {
 
     let csv_string = parse_file_to_csv_string(file).await?;
     let csv_records = parse_csv_string_to_records(csv_string)?;
