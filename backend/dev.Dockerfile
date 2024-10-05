@@ -6,6 +6,7 @@ RUN apt update && apt upgrade -y
 RUN apt install libpq-dev -y
 
 RUN cargo install cargo-watch
+RUN cargo install diesel_cli
 
 COPY ./ ./
 
