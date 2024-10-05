@@ -32,6 +32,9 @@ pub async fn event_parse_and_save_csv_handler(file: TempFile<'_>, event_id: i32,
 #[derive(FromForm)]
 pub struct EventForm<'r> {
     pub title: String,
+    pub location: String,
+    pub description: String,
+    pub body: String,
     pub date: String,
     pub url: String,
     pub tour_id: Option<i32>,
@@ -49,6 +52,9 @@ pub async fn event_create(mut event_data: Form<EventForm<'_>>, _apikey: ApiKeyGu
 
     let event = NewEvent {
         title: event_data.title.clone(),
+        location: event_data.location.clone(),
+        description: event_data.description.clone(),
+        body: event_data.body.clone(),
         date: chrono::NaiveDateTime::parse_from_str(&event_data.date, "%Y-%m-%dT%H:%M").unwrap(),
         url: event_data.url.clone(),
         tour_id: event_data.tour_id,

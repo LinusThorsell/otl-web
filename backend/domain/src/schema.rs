@@ -21,6 +21,9 @@ diesel::table! {
     events (id) {
         id -> Int4,
         title -> Varchar,
+        location -> Varchar,
+        description -> Varchar,
+        body -> Varchar,
         date -> Timestamp,
         url -> Varchar,
         image -> Varchar,
@@ -42,10 +45,14 @@ diesel::table! {
     tours (id) {
         id -> Int4,
         title -> Varchar,
+        location -> Varchar,
+        description -> Varchar,
+        body -> Varchar,
         start_date -> Timestamp,
         end_date -> Timestamp,
         url -> Varchar,
         score_count -> Int4,
+        image -> Varchar,
     }
 }
 

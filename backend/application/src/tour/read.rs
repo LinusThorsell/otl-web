@@ -17,6 +17,7 @@ pub fn tour_list() -> Vec<Tour> {
             tours
         },
         Err(err) => match err {
+            // TODO: specific error handling
             _ => {
                 panic!("Database error - {}", err);
             }

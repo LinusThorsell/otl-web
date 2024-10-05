@@ -29,10 +29,14 @@ pub struct NewBlogPost {
 pub struct Tour {
     pub id: i32,
     pub title: String,
+    pub location: String,
+    pub description: String,
+    pub body: String,
     pub start_date: chrono::NaiveDateTime,
     pub end_date: chrono::NaiveDateTime,
     pub url: String,
     pub score_count: i32,
+    pub image: String,
 }
 
 #[derive(Insertable, Deserialize)]
@@ -40,10 +44,14 @@ pub struct Tour {
 #[diesel(table_name = tours)]
 pub struct NewTour {
     pub title: String,
+    pub location: String,
+    pub description: String,
+    pub body: String,
     pub start_date: chrono::NaiveDateTime,
     pub end_date: chrono::NaiveDateTime,
     pub url: String,
     pub score_count: i32,
+    pub image: String,
 }
 
 #[derive(Queryable, Serialize, Ord, Eq, PartialEq, PartialOrd, Associations)]
@@ -51,6 +59,9 @@ pub struct NewTour {
 pub struct Event {
     pub id: i32,
     pub title: String,
+    pub location: String,
+    pub description: String,
+    pub body: String,
     pub date: chrono::NaiveDateTime,
     pub url: String,
     pub image: String,
@@ -62,6 +73,9 @@ pub struct Event {
 #[diesel(table_name = events)]
 pub struct NewEvent {
     pub title: String,
+    pub location: String,
+    pub description: String,
+    pub body: String,
     pub date: chrono::NaiveDateTime,
     pub url: String,
     pub image: String,
