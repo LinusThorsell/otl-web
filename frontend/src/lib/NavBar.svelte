@@ -1,5 +1,5 @@
 <script>
-  import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte'
+  import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, DarkMode } from 'flowbite-svelte'
 </script>
 
 <Navbar let:hidden let:toggle>
@@ -19,4 +19,5 @@
     <NavLi href="/about">Om oss</NavLi>
     <NavLi href="/contact">Kontakt</NavLi>
   </NavUl>
+  <DarkMode />
 </Navbar>

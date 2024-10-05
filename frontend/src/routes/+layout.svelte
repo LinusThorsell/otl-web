@@ -7,7 +7,7 @@
 <div class="flex flex-col min-h-screen">
   <NavBar />
 
-  <div class="grow">
+  <div class="grow dark:bg-gray-900">
     <slot />
   </div>
 
