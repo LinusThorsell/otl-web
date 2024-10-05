@@ -8,7 +8,7 @@ const config = {
     require('flowbite/plugin')
   ],
 
-  darkMode: 'class',
+  darkMode: 'media',
 
   theme: {
     extend: {

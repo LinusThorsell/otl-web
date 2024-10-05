@@ -9,7 +9,4 @@
 
 <Container>
   <EventCarousel events={data.events} />
-  <Button href="/results" class="w-fit ml-auto sm:mt-5">
-    Se resultat för tidigare tävlingar
-  </Button>
 </Container>

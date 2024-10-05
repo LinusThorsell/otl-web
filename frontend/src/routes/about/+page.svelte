@@ -6,7 +6,7 @@
 </script>
 
 <div class="flex flex-col justify-center items-center">
-  <h1 class="text-3xl font-bold mb-4 pt-5 text-center">Vilka är vi?</h1>
+  <h1 class="text-3xl font-bold mb-4 pt-5 text-center dark:text-white">Vilka är vi?</h1>
     <div class="mb-10 flex flex-wrap w-3/4 justify-around">
       <PersonalCard firstname="Linus" lastname="Thorsell" description="Hemsidan & Företaget" image="https://www.pdga.com/files/styles/large/public/pictures/picture-1959196-1649747166.jpg?itok=XSIJxB6Z" />
       <PersonalCard firstname="Robert" lastname="Sjöblom" description="Sponsring & Marknad" image="https://i.imgur.com/nzu8afm.jpeg" />
