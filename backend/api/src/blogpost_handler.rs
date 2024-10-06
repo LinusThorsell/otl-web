@@ -13,6 +13,6 @@ pub fn list_blogposts_handler() -> Result<Json<Response<Vec<BlogPost>>>, ApiErro
 
 #[get("/blogpost/<blogpost_id>")]
 pub fn list_blogpost_handler(blogpost_id: i32) -> Result<Json<Response<BlogPost>>, ApiError> {
-    let blogpost = read::list_blogpost(blogpost_id).map_err(ApiError)?;
+    let blogpost = read::list_blogpost(blogpost_id).map_err(ApiError::from)?;
     Ok(Json(Response::success(blogpost)))
 }

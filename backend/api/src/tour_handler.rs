@@ -35,44 +35,45 @@ pub async fn tour_create(mut tour_data: Form<TourForm<'_>>, _apikey: ApiKeyGuard
     let image_name = format!("{}.png", uuid::Uuid::new_v4());
     let save_path = Path::new("static/uploads/").join(&image_name);
 
-    if let Err(e) = tour_data.image.copy_to(&save_path).await {
-        eprintln!("Failed to save image: {}", e);
+    if let Err(err) = tour_data.image.copy_to(&save_path).await {
+        return Err(ApiError::InternalError(format!("Failed to save image: {}", err)))
     }
+
+    let start_date = chrono::NaiveDateTime::parse_from_str(&tour_data.start_date, "%Y-%m-%dT%H:%M")
+        .map_err(|err| ApiError::ValidationError(format!("Invalid start date: {}", err)))?;
+    let end_date = chrono::NaiveDateTime::parse_from_str(&tour_data.end_date, "%Y-%m-%dT%H:%M")
+        .map_err(|err| ApiError::ValidationError(format!("Invalid end date: {}", err)))?;
 
     let tour = NewTour {
         title: tour_data.title.clone(),
         location: tour_data.location.clone(),
         description: tour_data.description.clone(),
         body: tour_data.body.clone(),
-        start_date: chrono::NaiveDateTime::parse_from_str(&tour_data.start_date, "%Y-%m-%dT%H:%M").unwrap(),
-        end_date: chrono::NaiveDateTime::parse_from_str(&tour_data.start_date, "%Y-%m-%dT%H:%M").unwrap(),
+        start_date,
+        end_date,
         url: tour_data.url.clone(),
         score_count: tour_data.score_count,
         image: image_name,
     };
 
-    match create::create_tour(tour) {
-        Ok(_) => {},
-        Err(_) => {},
-    };
-
+    create::create_tour(tour).map_err(ApiError::from)?;
     Ok(Json(Response::success(())))
 }
 
 #[get("/tours")]
 pub fn list() -> Result<Json<Response<Vec<Tour>>>, ApiError> {
-    let tours = read::tour_list();
+    let tours = read::tour_list().map_err(ApiError::from)?;
     Ok(Json(Response::success(tours)))
 }
 
 #[get("/tour/get/<tour_id>")]
-pub fn tour_get(tour_id: i32) -> Result<Json<Response<Tour>>, ApiError> {
-    let tour = read::tour_get(tour_id).map_err(ApiError)?;
+pub fn get(tour_id: i32) -> Result<Json<Response<Tour>>, ApiError> {
+    let tour = read::tour_get(tour_id).map_err(ApiError::from)?;
     Ok(Json(Response::success(tour)))
 }
 
 #[get("/tour/leaderboard/<tour_id>")]
 pub fn leaderboard(tour_id: i32) -> Result<Json<Response<TourLeaderboard>>, ApiError> {
-    let leaderboard = read::tour_get_leaderboard(tour_id).map_err(ApiError)?;
+    let leaderboard = read::tour_get_leaderboard(tour_id).map_err(ApiError::from)?;
     Ok(Json(Response::success(leaderboard)))
 }

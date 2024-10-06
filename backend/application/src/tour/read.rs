@@ -8,18 +8,18 @@ use diesel::prelude::*;
 
 use crate::errors::ApplicationError;
 
-pub fn tour_list() -> Vec<Tour> {
+pub fn tour_list() -> Result<Vec<Tour>, ApplicationError> {
     use domain::schema::tours;
 
     match tours::table.select(tours::all_columns).load::<Tour>(&mut establish_connection()) {
         Ok(mut tours) => {
             tours.sort();
-            tours
+            Ok(tours)
         },
         Err(err) => match err {
-            // TODO: specific error handling
             _ => {
-                panic!("Database error - {}", err);
+                let message = format!("Error listing tours {}", err);
+                Err(ApplicationError::DatabaseError(message))
             }
         }
     }
@@ -32,8 +32,8 @@ pub fn tour_get(tour_id: i32) -> Result<Tour, ApplicationError> {
         Ok(tour) => Ok(tour),
         Err(err) => match err {
             diesel::result::Error::NotFound => {
-                let response = format!("Error finding tour with id {} - {}", tour_id, err);
-                return Err(ApplicationError::NotFound(response));
+                let message = format!("Error finding tour with id {} - {}", tour_id, err);
+                Err(ApplicationError::NotFound(message))
             },
             _ => {
                 panic!("Database error - {}", err);

@@ -11,8 +11,8 @@ pub fn list_blogpost(blogpost_id: i32) -> Result<BlogPost, ApplicationError> {
         Ok(blogpost) => Ok(blogpost),
         Err(err) => match err {
             diesel::result::Error::NotFound => {
-                let response = format!("Error finding blogpost with id {} - {}", blogpost_id, err);
-                return Err(ApplicationError::NotFound(serde_json::to_string(&response).unwrap()));
+                let message = format!("Error finding blogpost with id {} - {}", blogpost_id, err);
+                return Err(ApplicationError::NotFound(serde_json::to_string(&message).unwrap()));
             },
             _ => {
                 panic!("Database error - {}", err);

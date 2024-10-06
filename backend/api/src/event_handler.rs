@@ -5,7 +5,6 @@ use application::auth::apikey_guard::ApiKeyGuard;
 use domain::models::Event;
 use domain::models::NewEvent;
 use rocket::fs::TempFile;
-// use shared::response_models::{Response, ResponseBody};
 use rocket::post;
 use rocket::get;
 
@@ -71,6 +70,6 @@ pub async fn event_create(mut event_data: Form<EventForm<'_>>, _apikey: ApiKeyGu
 
 #[get("/events")]
 pub fn list() -> Result<Json<Response<Vec<Event>>>, ApiError> {
-    let events: Vec<Event> = read::list_events().map_err(ApiError)?;
+    let events: Vec<Event> = read::list_events().map_err(ApiError::from)?;
     Ok(Json(Response::success(events)))
 }

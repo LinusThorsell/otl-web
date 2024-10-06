@@ -45,7 +45,7 @@ fn rocket() -> _ {
             event_handler::list,
             tour_handler::tour_create,
             tour_handler::list,
-            tour_handler::tour_get,
+            tour_handler::get,
             tour_handler::leaderboard,
         ])
         .mount("/static", rocket::fs::FileServer::from("static"))
